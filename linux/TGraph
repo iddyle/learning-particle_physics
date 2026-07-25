@@ -1,1 +1,55 @@
+TGRAPH NEDİR?
 
+  Histogramda elimizde sadece sayılar vardı.
+  h->Fill(2);
+  h->Fill(5);
+  h->Fill(5);
+  h->Fill(8);
+ROOT bunları kutulara yani binlere yerleştiriyordu. Bu durumda histogram bize hangi aralıkta kaç tane veri olduğunu gösteriyordu. 
+Ama elimizde x ve y koordinatları varsa burada artık eşleşmeler var. Bunu yapan sınıf -> TGraph
+
+Amacı: (x,y) koordinatlarında oluşan noktaları çizer.
+
+TGRAPH kodu:
+      double x[5] = {1,2,3,4,5}; // double bir veri tipidir, int yalnızca tam sayıları saklar ama sayı ondalık ise double ile saklanılır. Grafikte noktalar her zaman tam sayı şeklinde olmak zorunda değildir bu yüzden double ile saklanılır.
+      double y[5] = {6,7,8,9,2};
+
+
+      TGraph *g = new TGraph(5,x,y);
+// 5 tane nokta oluştur. Her noktanın x koordinatını x dizisinden, y koordinatını ise y dizisinden al.
+// ilk parametre ile dizideki eleman sayısı aynı olmalıdır 5 eleman varsa TGraph içine de 5 yazmalısın
+[5] = ifadesi, x isimli 5 eleman tutabilen bir dizi oluşturulduğunu söyler. Diziler 0 dan baslar 0. indeks ile
+
+      TGraph'da ekrana grafiği çizdirmek:
+TH1F histogramlar da h->Draw() şeklinde yazıp bırakıyorduk ancak grafiklerde
+g->Draw("AP"); yazarız "AP" ne demek=
+                        A=Axis demektir. Eksenleri çiz der. Eğer A yazmazsan eksenler oluşmaz.
+                        P=Points demektir. Noktaları çiz der.
+
+
+g->Draw("AL"); yazarsak ROOT noktaları birbirine bağlar
+g->Draw("ALP"); hem çizgi hem nokta
+
+g->SetTitle("First Graph");
+g->SetTitle("First Graph"; X axis; Y axis"); // (Grafiğin başlığı; X ekseninin adı; Y ekseninin adı)
+
+
+GÖRÜNÜM AYARLARI:
+      1.Marker şekli
+g->SetMarkerStyle(20); // noktanın şeklini değiştirir. İçi dolu dairedir.
+g->SetMarkerStyle(21); // içi dolu kare
+g->SetMarkerStyle(22); // içi dolu üçgen
+
+24 // boş daire
+25 // boş kare
+26 // boş üçgen
+
+    2.Marker Boyutu
+g->SetMarkerColor(kRed); //marker rengi
+g->SetLineColor(kRed); //çizgi rengi
+g->SetLineWidth(3); // çizgi kalınlığı
+g->SetLineStyle(2); //çizgi stili
+
+1 = düz
+2 = kesikli
+3 = noktalı
