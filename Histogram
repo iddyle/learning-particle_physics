@@ -1,0 +1,95 @@
+1-Histogram'ın Özellikleri
+
+GetEntries():
+
+h->GetEntries(); Histogramın içine kaç veri eklendiğini söyler mesela 
+  h->FillRandom("gaus",10000); dediğimizde 10000 adet sayı üretiliyor
+  cout<< h->GetEntries(); dediğimizde çıktımız 10000 olur. Önemli çünkü bu şekilde histogramın içinde gerçekten kaç olay olduğunu öğreniyoruz
+
+GetMean():
+
+h->GetMean(); histogramdaki sayıların aritmetik ortalamasını hesaplar
+Not: Gaussian dağılımının merkezi 0 olduğu için çıktı tam 0 olmaz ama çok yakın bir değer çıkar
+
+GetRMS():
+
+h->GetRMS();
+RMS açılımı root mean square. standart sapmaya çok yakın bir büyüklük olarak kullanılır. Standart sapma verilerin ortalamadan ne kadar uzaklaştığını söyler.
+
+GetMaximum():
+
+h->GetMaximum(); en yüksek binin içerdiği olay sayısıdır
+
+GetBinContent():
+  GÖREVİ: belirli bir bin'in içinde kaç tane veri olduğunu söyler
+
+GetBinCenter():
+  bir binin merkezinin x değerinin ne olduğunu söyler grafik çizerken, fit yaparken ve veri analizinde kullanılır
+----------------------------------------------------------
+
+DERS 2: TCanvas
+TH1F veriyi tutar TCanvas ise o veriyi göstereceğimiz penceredir.
+
+cd():
+  Change Directory ifadesinden gelir. Şimdi çalışılacak aktif canvas'ı seç komutu verir.
+
+Divide():
+  Tek bir canvas'ı birden fazla bölmeye ayırır. Divide(2,2) dediğimizde bu sütün x satır seklindedir. Bu küçük 4 adet parçaya ROOT da PAD denir. cd() sadece canvas seçmek için değil
+  pad seçmek için de kullanılır.
+
+  c->cd(3); Canvas'ın 3 numaralı pad'ine geç
+
+------------------------------------------------------------
+
+Konu: SetLineColor()
+
+  TH1F *h1 = new TH1F("h1","First Histogram",10,0,10);
+
+  h1->Fill(2);
+  h1->Fill(5);
+  h1->Fill(8);
+
+  h1->SetLineColor(kRed);
+
+  c->cd(1);
+  h1->Draw();
+
+Konu: SetFillColor()
+
+  h1->SetLineColor(kRed) = Çizgileri kırmızıya boyar
+
+  h1->SetFillColor(kBlue) = histogramın içini maviye boyar
+  Fill = histograma veri ekler
+    h1->Fill(5); histograma 5 verisini ekle
+
+Konu: SetLineWidth()
+
+  h1->SetLineWidth(3); //histogramın çizgileri daha kalın olur
+
+Konu: SetTitle()
+
+  h1->SetTitle("My first Histogram"); //Grafiğin üst kısmındaki başlığı değiştirir
+
+  h1->Draw();
+
+Konu: GetXaxis()->SetTitle()    
+  -- X ekseninin adını yazar
+
+  h1-> GetXaxis()->SetTitle("Energy");
+  h1->Draw();
+
+Konu: GetYaxis()->SetTitle()
+  -- Y ekseninin adını yazar. Aynı şekilde kodlanılır.
+
+-----------------------------------------------------------
+
+KONU: SaveAs()
+
+  --histogramı png pdf veya root dosyası olarak kaydetmek istersek TCanvas kulanıyoruz.
+
+  TCanvas *c = new TCanvas("c","Canvas",800,600);
+  h"->Draw();
+  c-SaveAs("histogram.png");
+
+  --Kaydettiğimiz şey sadece histogram değil Canvas'ın kendisi olduğu için Canvas kullanarak kaydederiz
+
