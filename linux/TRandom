@@ -1,1 +1,92 @@
+TRandom2
+  Amaç:
+  -Rastgele sayı üretmek
+  -Gaussian (normal) dağılım üretmek
+  -Histogramı doldurmak
 
+TRandom2 nedir?
+Root'un rastgele sayı üreten sınıfıdır.
+
+  TRandom2 *rand = new TRandom2(1)
+//Bu satır rastgele sayı üreticisi oluşturur.
+
+  double x = rand->Rndm();
+//Rndm() fonksiyonu 0 ile 1 arasında bir double döndürür. 
+  0.1423 gibi
+veya
+  0.9876 gibi
+
+
+void random1()
+{
+    TRandom2 *rand = new TRandom2(1);
+    double x = rand -> Rndm();
+    cout << x << endl;
+}
+
+cout << rand->Rndm() <<endl; //her çağrışta yeni bir sayı üretir
+
+Şimdi senin sorun: 50–200
+
+Önce aralığın uzunluğunu bul.
+
+200 - 50 = 150
+
+Demek ki önce 0–150 üretmelisin:
+
+rand->Rndm() * 150
+
+Sonra başlangıç olan 50'yi ekle:
+
+rand->Rndm() * 150 + 50
+
+Bu sana 50 ile 200 arasında sayı verir.
+
+Genel kural
+
+Eğer A ile B arasında sayı istiyorsan:
+
+rand->Rndm() * (B - A) + A
+
+DERS 1.2: Gaus()
+Gaussian dağılımından sayu üretir. (verilerin ortalama etrafında simetrik olarak kümelendiği, grafik çizildiğinde ortası yüksek ve kenarları simetrik olarak alçalan bir olasılık dağılımıdır.)
+
+  rand -> Gaus(50,10)
+50 = ortalama (mean)
+10 = standart sapma (sigma)
+üretilen sayıların çoğu 50'nin etrafındadır.
+
+
+
+DERS 1.3: Uniform()
+uniform daha okunaklıdır ve aralığı doğrudan yazarsın.
+
+  rand->Rndm()*100 
+ve
+  rand->Uniform(0,100) 
+aynıdır.
+
+
+
+
+DERS 1.4: Integer()
+bazen ondalık sayı istemeyiz
+
+  rand->Integer(6)
+çıktı:
+
+0
+1
+2
+3
+4
+5
+
+integer(n) -> 0'dan n-1'e kadar üretir.
+
+
+  öğrenilen fonksiyonlar:
+-Rndm(): 0 ile 1 arasında double üretir
+-Uniform(a,b): a-b arasında double üretir
+-Gaus(mean,sigma): normal dağılımdan sayı üretir
+-integer(n): 0-(n-1) arasında tam sayı üretir
