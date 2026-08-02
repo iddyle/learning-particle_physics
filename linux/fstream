@@ -1,1 +1,40 @@
+    DERS 4: FSTREAM
+bilgisayarın dosyadan verileri okumasını sağlarız.
 
+    #include<fstream>
+Bu kütüphane C++'ta dosya açmak için kullanılır
+
+    fstream file;
+bu satır dosyayla ortak çalışacak bir nesne oluşturur.
+
+    file.open("data.txt", ios::in);
+Burada "data.txt" açılacak dosyanın adı
+ios::in -> dosyayı okuma modunda açar
+
+    double value;
+    file>> value;
+
+dediğimizde eğer dosya şöyleyse,
+15
+23
+45
+şeklindeyse ilk çalıştırmada
+
+    value= 15;
+
+ikinci kez 
+    file>>value; yazarsan artık
+
+    value= 23; 
+olur
+
+dosyanın tamamını okumak için döngü kulanırız. Genellikle en temiz yöntemi while ile yazılır.
+
+    while (file >> value)
+{
+    hist -> Fill (value);
+}
+
+-Bu döngünün anlamı dosyadan okunabildiği sürece okumaya devam et dmemektir. Dosya bittiğinde döngü kendiliğinden biter.
+
+işin bittiğinde file.close(); ile dosyayı kapatırsın
