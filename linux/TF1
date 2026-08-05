@@ -1,1 +1,64 @@
+DERS 3: TF1
+
+TF1 nedir?
+ROOT'ta matematiksel fonksiyon oluşturmak için kullanılır
+  -Gaussian
+  -Polinom  
+  -sin(x)
+  -y=x^2 gibi
+
+
+#include<TF1.h>
+#include<TCanvas.h>
+
+void func1()
+{
+    TF1 *f = new TF1("f","x*x",0,10);
+
+// f, fonksiyonun adı. x*x fonksiyonun kendisi. 0,10 fonksyionu 0 ile 10 arasında çizer
+
+    TCanvas *c = new TCanvas();
+    f->Draw();
+
+// çizdirmek için her zaman f draw kullanılır.
+
+}
+
+DERS 3.2: Histograma Fit Uygulama
+ROOT histograma bakarak veriye en iyi uyan Gaussian eğrisini bulur ve histogramın üzerine kırmızı bir eğri çizer. Yani noktaların üzerinden geçen düzgün bir çan eğrisi oluşur.
+
+  ROOT'un hazır fonksiyonları:
+    - "gaus" = gaussian
+    - "pol1" = 1. dereceden doğru
+    - "pol2" = 2. dereceden polinom
+    - "expo" = üstel fonksiyon
+
+FİT NEDEN YAPIYORUZ?
+Gerçek deneyde elimizde milyonlarca veri olur. Elektron enerjileri, histogram çizme vs. 
+    h->Fit("gaus");
+ile ROOT bize mean, sigma ve hata değerlerini tek tek hesaplamamıza gerek kalmadan gösterir.
+
+çıktı:
+      -Constant 387.9 ...
+      -Mean     49.8  ...
+      -Sigma    10.05 ...
+
+1.MEAN:
+mean = ortalama demektir.
+    veri: rand->Gaus(50,10); şeklindeydi. 
+Gaus(50,10)
+ilk sayı: 50. Bu ortalama (mean) demektir. Yani ROOT'a diyorsun ki üreteceğin sayıların merkezi 50 olsun. Bu sayede üretilen sayıların çoğu 50 etrafında olur.
+ikinci sayı: 10. Bu standart sapma (sigma). Bu, sayıların 50'nin etrafına ne kadar yayılacağını belirler. Eğer 2 yazaarsan sayılar çok sıkışık olur. Eğer 20 yazarsan sayılar çok geniş olur. Histogramın birinde ince ve dar oluşur diğeri ise yayvan.
+Bu, ortalaması 50 standart sapması 10 olan rastgele sayılar üret.
+
+
+
+
+
+
+
+
+
+
+
 
