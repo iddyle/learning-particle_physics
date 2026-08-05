@@ -1,1 +1,23 @@
+DERS 5: TFİLE
+ROOT'un kendi dosya formatıdır.
+    data.root dosyasının içine şunları kaydedebilirsin:
+-histogramlar (TH1F)
+-Grafikler (TGraph)
+-Fonksiyonlar (TF1)
+-TTree'ler
+ve daha birçok ROOT nesnesi. Yani .root, ROOT'un kendi veri kutusudur.
 
+  DOSYA OLUŞTURMA:
+TFile *file = new TFile("test.root","RECREATE");
+
+"test.root" -> oluşturulacak dosyanın adı
+"RECREATE" -> eğer dosya yoksa oluştur varsa silip yeniden oluştur demektir.
+
+  diyelim ki histogram kaydediyoruz.
+histogramımız: 
+            TH1F *hist = new TH1F(...); 
+kaydermek için tek bir satır yeterlidir.
+            hist->Write();
+
+Dosyayı kapatmak için,
+        file -> Close();
