@@ -1,1 +1,54 @@
+    DERS 1 : TTree nedir?
+TH1F *hist = new TH1F(...);
+hist->Fill(5.1) ... vs
+Histogram sadece olan sayıları topluyordu. Ama gerçek deneyde durum böyle değil. Gerçek deneyde mesela CERN'de tek bir elektron için elimizde Pt Eta Phi Energy değerleri olabilir. Bu tek elektrona ait 4 farklı bilgidir. Histogram bunları birlikte saklayamaz.
+TTree bunun için vardır. Aslında görevi dev bir tablo olmaktır.
 
+               TTree
+
+Energy     Pt      Eta      Phi
+--------------------------------
+125.6      61.2    1.42     2.10
+98.4       45.1   -0.63    -1.40
+142.7      70.5    0.55     0.81
+
+
+bu sütunlara ROOT da branch deriz. mesela Energy bir Branch Pt başka bir Branch'dir. Her satır bir olay (event) dir.
+Event 1 -> Energy Pt Eta Phi
+
+sonraki satır
+Event 2 -> yani elektron
+
+Histogram graif çizmek için TTree ise veriyi saklamak içidir.
+
+    ÇOK ÖNEMLİ 3 KELİME
+
+BRANCH: Sütun mesela Energy ya da Pt ya da Eta
+
+ENTRY: Satur numarasıdır. Mesela ilk satır entry 0ikinci satır entry 1
+
+EVENT: Bir satırdaki büyün bilgiler
+
+using namespace std;
+void ttree1()
+{
+    TFile *file = new TFile("tree.root","RECREATE");
+//tree.root isminde bir ROOT dosyası oluşturuyor çünkü TTree nin de bir yere kaydedilmesi gerekiyor bu dosyaya kaydedilecek    
+    TTree *tree = new TTree("tree","My First Tree");
+//Bellekte boş bir TTree oluşturuyoruz. "tree" noot'un iç ismi. "my first tree" başlık
+    double x;
+//rastgele bir tane değişken edindik    
+    tree -> Branch("x",&x);
+//Tree'nin içinde x isminde bir sütun oluşturur. Tree nesnesinin Branch fonksiyonunu çağır
+//& adres demektir. x in bellekteki adresi. ROOT x'in değişimini izleyeceği için adrese ihtiyacı var.
+    TRandom2 *rand = new TRandom2(1);
+
+    for(int i=0; i<100; i++)
+    {
+        x = rand->Gaus(5,1);
+        tree->Fill();
+    }
+
+    tree->Write();
+    file->Close();
+}
