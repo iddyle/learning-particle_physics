@@ -51,14 +51,128 @@ ilk sayı: 50. Bu ortalama (mean) demektir. Yani ROOT'a diyorsun ki üreteceğin
 ikinci sayı: 10. Bu standart sapma (sigma). Bu, sayıların 50'nin etrafına ne kadar yayılacağını belirler. Eğer 2 yazaarsan sayılar çok sıkışık olur. Eğer 20 yazarsan sayılar çok geniş olur. Histogramın birinde ince ve dar oluşur diğeri ise yayvan.
 Bu, ortalaması 50 standart sapması 10 olan rastgele sayılar üret.
 
+FİT FUNCTIONS:
+Elinde bir histogram var ve sen diyorsun ki bu dağılıma en uygun matematiksel fonksiyon hangisi?
+işte fit buna deniyor. ROOT bunu şu komutla yapıyor;
+
+      hist -> Fit("gaus");
+
+Parameters ne demek?
+Her fonksiyonun bazı parametreleri vardır.
+
+A = Amplitude / Constant = eğrinin yüksekliği
+µ = Mean = Eğrinin merkezi
+ = Sigma = eğrinin genişliği
+
+ROOT bunları otomatik olarak bulur. Başka fit fonksiyonları da vardır. Örneğin;
+
+hist -> Fit("pol1") : Doğru
+
+hist -> Fit("pol2") : parabol
+
+hist -> Fit("expo") : üstel
+
+hist -> Fit("gaus") : gaussian
 
 
 
+Bir matematiksel fonksiyon oluşturuyoruz:
 
+    TF1 *fit = new TF1("fit","gaus",0,10);
+burada *fit = fonksiyonun adı -> diyerek bu fonksiyon üzerinde işlem yapacağız.
+new bellekte yeni bir fonksiyon oluşturuyor
+"fit" fonksiyonun root içindeki adı
+"gaus" fonksiyonun tipi
+Burada root diyor ki "bu fonksiyon Gaussian olacak"
+0,10 fonksiyonun çalışacağı x aralığı yani fit yalnızca 0 ile 10 arasında yapılacak
 
+PARAMETRE AYARLAMAK
 
+    fit -> SetParameter(0,40); 
+buradaki 0 parametre numarasıdır. Gaussian da parametreler şöyledir;
+0 = Constant (yükseklik)
+1 = Mean (ortalama)
+2 = Sigma (Standart sapma)
+Fonksiyonun başlangıç yüksekliği 40 olsun diyoruz.
 
+    fit -> SetParameter(1,5);
+parametre 1 = mean yani µ
 
+    fit -> SetParameter(2,2);
+parametre 2 = sigma
+
+    hist -> Fit("fit","R");
+histogramı fit et demektir.
+
+FİT İŞLEMİ NE YAPIYOR?
+Sen ROOT'a şunu söylüyorsun:
+başlangıçta:
+constant = 40
+mean = 5
+sigma = 2 
+olsun. ROOT ise histograma bakıp bunları değiştiriyor.
+
+    double mean = fit -> GetParameter(1);
+GetParameter(1) = Mean'i getirir vs.
+
+*SetParameters()
+şimdiye kadar fit ile tek tek yazıyorduk ama ROOT da bunun kısa yolu da var
+
+fit -> SetParameters(40,5,1);
+yani
+parameter 0 = 40
+parameter 1 = 5
+parameter 2 = 1
+olarak hepsini tek satırda veriyor.
+
+*Fit Options
+
+    hist -> Fit ("fit","R"); Range demektir.
+
+Sen fonksiyonu TF1 *fit = new TF1("fit","gaus",0,10); olarak oluşturmuştun
+ROOT sadece 0-10 aralığını fit yapar
+
+    hist -> Fit("fit","Q");
+Terminale fit sonuçlarını yazmaz
+
+    hist -> Fit("fit","0");
+Fit'i hesaplar ama kırmızı eğriyi çizmez
+
+DERS 3 : GetParError()
+Fit yaptıktan sonra ROOT sadece parametreyi bulamaz parametrenin hatasını da hesaplar
+
+    double mean = fit -> GetParameter(1);
+Mean'i getirir
+    double meanError = fit -> GetParError(1);
+Buradaki 1 yine Mean'i temsil eder ve Mean'in hatasını getirir
+
+DERS 4 : SetParLimits();
+Bazen ROOT çok saçma bir sonuç bulabilir o yüzden sınır koyarız.
+
+    fit -> SetParLimits(2,0,5);
+anlamı iki numaralı parametreyi (sigma) 0 ile 5 arasında tut
+
+DERS 5 : KENDİ FONKSİYONUNU YAZMAZ
+mesela doğru denklemi y=ax+b olsun
+ROOT'ta şöyle yazılır:
+
+  TF1 *f = new TF1("f","[0]*x+[1]",0,10);
+burada,
+[0] = bir parametre ve başlangıçta değeri yok.
+[1] = ikinci parametre
+
+Şimdi değer veriyoruz;
+
+    f -> SetParameter(0,2);
+yani a = 2
+    f -> SetParameter(1,5);
+yani b = 5
+
+artık fonksiyon 
+    y = 2x + 5
+
+    f->Draw(); 
+diyerek çizdiriryorum
 
 
 
