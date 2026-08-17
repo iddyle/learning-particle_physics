@@ -1,1 +1,24 @@
+TCanvas *c1 ...
+c1 -> SetTickx
+c1 -> SetTicky 
+dediğimizde x ve y eksenlerine tickler ekliyor çizgiler
+
+hist -> SetFillColor(kGreen-9) yesile boyar
+
+TCanvas *c1 = new TCanvas();
+  *Grafiklerin çizileceği pencereyi (canvas) oluşturur.
+
+TGraphErrors *gr = new TGraphErrors();
+  *Hem x hem y yönünde hata çubuklerı (Error bar) olan bir grafik nesnesi oluşturur.
+Boş başlatılıyor, noktalar sonradan eklenilir.
+
+fstream file;
+file.open("data3.txt",ios::in);
+  *data3.txt dosyasını okuma modunda (ios::in) açar. Bu dosyada muhtemelen her satırda x y ex ey şeklinde 4 sayı vardır.
+
+double x, y, ex, ey;
+  *dosyadan okunacak değerler için değişkenler: x,y konumu ve ex, ey bunların hataları
+
+int n=0;
+  *Grafikteki nokta sayısını takip etmek için saya.
 
