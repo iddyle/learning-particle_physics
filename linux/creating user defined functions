@@ -1,0 +1,7 @@
+"gaus" hazır bir fonksiyon. Peki kendi matematiksel fonksiyonumuzu nasıl yazarız.
+
+  USER-DEFINED FUNCTION NE DEMEK?
+kullanıcının kendi tanımladığı fonksiyondur. ROOT'ta bunu TF1 ile yapabiliriz.
+
+  *TF1 *f = new TF1("f","2*x+3",0,10);
+burada ROOT'a "f" isimli bir fonksiyon oluştur matematiksel ifadesii 2*x+3 olsun ve x değeri 0 ile 10 arasında olsun diyoruz
