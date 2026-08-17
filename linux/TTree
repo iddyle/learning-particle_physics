@@ -19,15 +19,15 @@ Event 1 -> Energy Pt Eta Phi
 sonraki satır
 Event 2 -> yani elektron
 
-Histogram graif çizmek için TTree ise veriyi saklamak içidir.
+Histogram grafik çizmek için TTree ise veriyi saklamak içidir.
 
     ÇOK ÖNEMLİ 3 KELİME
 
 BRANCH: Sütun mesela Energy ya da Pt ya da Eta
 
-ENTRY: Satur numarasıdır. Mesela ilk satır entry 0ikinci satır entry 1
+ENTRY: Satır numarasıdır. Mesela ilk satır entry 0 ikinci satır entry 1
 
-EVENT: Bir satırdaki büyün bilgiler
+EVENT: Bir satırdaki bütün bilgiler
 
 using namespace std;
 void ttree1()
@@ -52,3 +52,103 @@ void ttree1()
     tree->Write();
     file->Close();
 }
+
+        PARÇACIK FİZİĞİNDE BİR EVENT = tek bir çarpışmaya ait verilerin tamamıdır.
+
+tree -> GetEntries() : Tree de kaç tane entry olduğunu söyler. 100 kere Fill() yaptıysan
+tree -> GetEntries() : 100 döner
+
+Diyelim ki Tree de şu branch var:
+            x
+C++ tarafında da:
+            double x;
+oluşturuyoruz
+
+--BRANCH'I DEGİSKENE BAGLIYORUZ--
+tree -> SetBranchAddress("x",&x);
+bunun anlamı:     
+            Tree'deki x branch'ini, benim C++'taki x değişkenime bağla.
+"x" = Tree'deki branch'in adı
+&x = C++ değişkeninin adresi
+
+        tree -> Branch("x",&x); C++ -> TTree
+        tree -> SetBranchAddress("x",&x); TTree -> C++
+
+            | Entry |    x |
+            | ----: | ---: |
+            |     0 | 5.12 |
+            |     1 | 4.93 |
+            |     2 | 6.01 |
+
+tree -> GetEntry(0) ; ROOT: "0 numaralı entry'yi getir."
+sonra x değişkeninin içine x = 5.12 geliyor
+
+
+SCAN() vs DRAW():                   
+TTree'de veriyi görmek için iki farklı yöntemimiz var
+    SCAN():
+    tree->Scan("x:y");        
+verileri tablo halinde gösterir
+        
+        x       y
+        5.2     9.7
+        4.8     11.3
+        ...
+
+
+    DRAW():
+    tree->Draw("x");
+x değerlerinin dağılımını histogram olarak gösterir. Bu verilerin nasıl dağıldığını görmüş oluruz
+
+    tree->Draw("y:x"): dersek xy ilişkisini 2 boyutlu görürüz
+y:x = y'yi x'e karşı çiz anlamına geliyor
+x = yatay eksen
+y = diket eksen
+
+                                        TFile
+                                         ↓
+                                        TTree
+                                         ↓
+                                        Branch
+                                         ↓
+                                        Entry
+                                         ↓
+                                        Fill()       ← veri yazarken
+                                         ↓
+                                        Write()      ← dosyaya kaydeder
+                                        
+                                        SetBranchAddress() ← veri okurken
+                                         ↓
+                                        GetEntry()
+                                         ↓
+                                        TH1F
+                                         ↓
+                                        Fill()
+                                         ↓
+                                        Draw()
+
+tree -> Draw("y:x"); 
+dediğimizde burada her entry bir nokta oluyor.
+
+Entry 0 -> (x0,y0)
+Entry 1 -> (x1,y1)
+Entry 2 -> (x2,y2)
+
+yani artık:
+x = yatay eksen
+y = dikey eksen
+
+ve ROOT bize x ile y'nin birlikte nasıl dağıldığını gösteriyor.
+
+Neden önemli?
+Tek boyutlu histogram:
+tree -> Draw("x");
+    * sadece x değerleri nasıl dağılıyor? sorusunu cevaplar ama
+
+tree -> Draw("y:x");
+    * x değişirken y nasıl davranıyor?
+
+BİR DE CUT EKLEYEBİLİRİZ
+mesela sadece x > 5 olan entry'leri çizmek istersej
+    *tree -> Draw("y:x","x>5");
+burada y:x neyi çiziyoruz ve x>5 hangi event'leri kullanıyoruz?
