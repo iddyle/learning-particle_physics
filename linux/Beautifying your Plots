@@ -22,3 +22,11 @@ double x, y, ex, ey;
 int n=0;
   *Grafikteki nokta sayısını takip etmek için saya.
 
+c1 -> SetGridy();
+ *yatay grid çizgileri
+
+c1 -> SetGridx();
+ *dikey grid çizgileri
+
+hist->SetStats(0);
+ *Entries Mean Std Dev kutusunu kapatıyor, görmüyoruz
