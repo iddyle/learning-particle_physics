@@ -5,3 +5,39 @@ kullanıcının kendi tanımladığı fonksiyondur. ROOT'ta bunu TF1 ile yapabil
 
   *TF1 *f = new TF1("f","2*x+3",0,10);
 burada ROOT'a "f" isimli bir fonksiyon oluştur matematiksel ifadesii 2*x+3 olsun ve x değeri 0 ile 10 arasında olsun diyoruz
+
+void tut12()
+{
+    TCanvas *c1 = new TCanvas();
+    TF1 *func = new TF1("func","[0] + [1]*x",0,5);
+
+    func -> SetParameter(0,1);
+    func -> SetParameter(1,2);
+
+    func -> Draw();
+}
+
+void tut12()
+{
+    TCanvas *c1 = new TCanvas();
+    TF1 *func = new TF1("func","exp(-[1]*x)*[0]*sin(x)",0,10*TMath:Pi());
+
+    func -> SetTitle(" ");
+
+    func -> SetParameter(0,1);
+    func -> SetParameter(1,2);
+
+    func -> Draw();
+}
+
+TMath Nedir?
+TMath, ROOT'un matematiksel fonksiyonlar ve sabitler içeren yardımcı sınıfıdır. Normal bir sınıf gibi nesne yaratıp kullanmıyoruz büyün üyeler static.
+Yani C++'ın std:: namespace'i gibi doğrudan sınıf adıyla erişiyoruz
+
+TMath:: sınıfının içindeki fonksiyonu çağırıyorsun
+Abs(x) = mutlak değer
+Sqrt(x) = karekök
+Power(2,3) = kare alma = iki üzeri 3
+
+SetBranchAddress
+  *Bir TTree içindeki Branch'in verisini kendi C++ değişkenine bağlar
