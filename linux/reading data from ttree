@@ -1,0 +1,90 @@
+TTree yi bir tablo gibi düşünebilirsin
+
+      | Entry | genJetPt | genJetEta | eventJetMult |
+      | ----: | -------: | --------: | -----------: |
+      |     0 |      ... |       ... |          ... |
+      |     1 |      ... |       ... |          ... |
+      |     2 |      ... |       ... |          ... |
+      |   ... |      ... |       ... |          ... |
+
+Biz bu tablodan satır satır veri okuyacağız
+
+2- BRANCH I DEGİSKENE BAGLAMA
+Mesela genJetPt okumak istiyoruz:
+
+    double pt;
+    tree -> SetBranchAddress ("genJetPt",&pt);
+burada "genJetPt" -> Ttree deki branch -> &pt -> C++ değişkenimiz
+Yani ROOT a "genJetPt" branch inden okuduğun değeri pt değişkeninin içine koy diyoruz
+
+3- VERİYİ OKUMAK
+
+  tree -> SetBranchAddress("genJetPt",&pt);
+sadece bağlantıyı kuruyor. Veriyi gerçekten almak için "GetEntry" kullanıyoruz
+
+  tree -> GetEntry(i);
+
+Örnegin: 
+  tree -> GetEntry(0);
+dediğimizde:
+  0. entry nin değerini icerir
+
+4- Bütün eventleri okumak
+  *Bunun icin -while- kullanırız.
+
+
+
+      double pt;
+      
+      tree -> SetBranchAddress("genJetPt",&pt);
+      
+      Long64_t i=0; //ilk entry den başlıyoruz
+      
+      while (i < tree -> GetEntries()) //ttree de 28.614 entry var
+        {
+            tree -> GetEntry(i);
+      
+            cout << pt << endl;
+      
+            i++;
+        }
+
+
+JET FİZİGİNDE UC TEMEL TERİM
+
+    pT = Transverse momentum
+
+*pT​= sqrt (px2​+py2​) - Jetin demet eksenine dik yöndeki momentumudur. Birimi genellikle GeV (Gigaelektronvolt: temel olarak parçacık fiziğinde kullanılan enerji ve kutle - enerji eşdeğerliği nedeniyel kütle ölçü birimidir. "Giga" Milyar 10^9 ve elektron volt eV birimlerinin birleşimidir. 1 GeV 1 milyar elektronvolta eşittir.)
+*Jet ne kadar güçlü enerjik sorusunun önemli göstergelerinden biridir.*
+*Bizim verimizde genJetPt, matched generator - level jet in (ürete. düzeyinde eşleştirilmiş jettir
+parçacık fiziği deneylerinde Monte Carlo simülasyonlarında, dedektör tarafından ölçülen bir jetin, simülasyonun saf gerçeklik aşamasındaki karşılığı olan GenJet ile uzamsal olarak eşleştirilmesi sürecidir.
+Temel Kavramlar
+    Generator-level Jet (GenJet): Çarpışma sonrasında simülasyonda oluşan kararlı parçacıkların bir jet algoritmasıyla kümelenmesiyle elde edilen teorik sestir.
+    Eşleştirme (Matching): Dedektör verisindeki jetin η-φ (konum) düzleminde en yakın veya belirli bir yarıçap (Δ R) kriterini sağlayan generator jetiyle ilişkilendirilmesidir.
+    Kullanım Amacı 
+    Performans Ölçümü: Dedektörün jet enerjisi ve yönünü ne kadar doğru ölçtüğünü test etmek.Kalibrasyon: Jet Enerji Çözünürlüğü (JER) ve düzeltmelerini uygulamak.Fizik Analizleri: Üst kuark veya Higgs parçacığı gibi süreçlerde doğru parçacık etiketlemesi yapmak)
+transverse momentumu olarak tanımlanıyor
+mesela
+
+  *pT = 50GeV
+-> Jetin transverse momentumu 50 GeV
+
+
+η — pseudorapidity
+
+Jetin parçacık demetine göre hangi yönde çıktığını ifade eden açısal bir koordinat. Bizim verimizde genJetEta = generator - level jet'in pseudorapidity'si
+​
+JET = Çarpışmadan çıkan aynı yöne doğru yoğunlaşmış bir parçacık demeti / topluluğu
+Çarpışma noktasından çıkan parçacıklar rastgele her yöne dağılmak yerine bazı durumlarda dar bir koni / bölge içerisinde birlikte ilerliyorlar
+biz bu parçacık topluluğuna JET diyoruz. JET tek bir parçacık değil, bir sürü parçacığın birlikte oluşturduğu yapıdır.
+
+NEDEN JET OLUŞUYOR?
+çünkü yüksek enerjili bir kuark veya gluon doğrudan dedektöre kadar tek başına gitmek yerine parçacıklara dönüşüyor
+Buna kabaca = hadronizatiın / fragmentation gibi süreçlerle ulaşıyoruz.
+Dolayısıyla dedektörde tek bir kuark değil bir parçacık topluluğu görüyoruz
+
+jetPt = bir jetin içerisinde bir sürü parçacık var bu parçacıkalrın toplam momentumunden jetin momentumunu belirliyoruz.
+pT = momentumun beam eksenine dik kısmına denir.
+
+Multiplicity = kaç tane jet olduğunu söyleyen sayı = bir event teki jet sayısı
+    evenJetMult branch imiz bir eventte ki jet sayısını tutuyor
